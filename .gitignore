@@ -41,3 +41,26 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+# 忽略当前文件夹下的build 不添加到版本控制
+build/
+
+# 忽略app/build/不添加到版本控制
+app/build
+
+# 忽略.idea文件下的所有
+.idea
+
+# 忽略.gradle 文件夹
+.gradle
+
+# 忽略.gitattributes 文件夹
+.gitattributes
+
+# 忽略*.iml 文件夹
+*.iml
+
+# 忽略*.iml 文件夹
+local.properties
+
+# 忽略gradle.properties 文件夹
+gradle.properties

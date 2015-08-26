@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/bottom_bar_normal_bg">
+
+        <TextView
+            android:id="@+id/title_bar_layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="7dp"
+            android:clickable="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:scaleType="centerInside"
+            android:textColor="@android:color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/title_bar_layout_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:textColor="@color/gray"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/title_bar_layout_add"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="3dp"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/search_btn_refine"
+            android:clickable="true"
+            android:scaleType="centerInside" />
+    </RelativeLayout>
+
+
+    <com.lxcay.laoke.view.CustomRadioGroup
+        android:id="@+id/main_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"></com.lxcay.laoke.view.CustomRadioGroup>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/main_footer"
+        android:layout_below="@+id/title_bar_layout"></android.support.v4.view.ViewPager>
+</RelativeLayout>

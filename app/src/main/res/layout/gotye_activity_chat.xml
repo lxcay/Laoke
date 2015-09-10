@@ -128,7 +128,6 @@
                 android:paddingTop="0dp" />
 
 
-
             <Button
                 android:id="@+id/press_to_voice_chat"
                 android:layout_width="match_parent"
@@ -144,13 +143,15 @@
                 android:textColor="@color/gray"
                 android:textSize="18sp"
                 android:visibility="gone" />
+
             <Button
                 android:id="@+id/chat_biaoqing_bt"
                 android:layout_width="30dp"
-                android:layout_marginRight="5dp"
                 android:layout_height="30dp"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/press_to_voice_chat"
                 android:background="@drawable/btn_biaoqing" />
+
             <TextView
                 android:id="@+id/more_type"
                 android:layout_width="33dp"
@@ -162,12 +163,12 @@
                 android:gravity="center"
                 android:textSize="16dp" />
         </RelativeLayout>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/biaoqing_viewpager"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="115dp" >
-        </android.support.v4.view.ViewPager>
+            android:layout_height="115dp"
+            android:visibility="gone"></android.support.v4.view.ViewPager>
 
         <LinearLayout
             android:id="@+id/more_type_layout"
@@ -209,6 +210,11 @@
                 android:src="@mipmap/realtime_voice"
                 android:visibility="gone" />
         </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/ad_container_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

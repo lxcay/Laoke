@@ -34,4 +34,14 @@ dependencies {
     compile files('libs/core-1.2.jar')
     compile files('libs/libs.jar')
     compile files('libs/wx-1.1.jar')
+
+//    注释部分为引用aar 的方式
+//    compile(name:'singlegame', ext:'aar')
+
 }
+
+//repositories {
+//    flatDir {
+//        dirs 'libs' //this way we can find the .aar file in libs folder
+//    }
+//}

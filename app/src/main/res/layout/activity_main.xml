@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
+            android:text=""
             android:textColor="@color/gray"
             android:textSize="18sp" />
 
@@ -51,10 +52,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"></com.lxcay.laoke.view.CustomRadioGroup>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_body"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/main_footer"
-        android:layout_below="@+id/title_bar_layout"></android.support.v4.view.ViewPager>
+        android:layout_below="@id/title_bar_layout"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_bar_layout" />
+
+
+        <ListView
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/transparent"
+            android:choiceMode="singleChoice"
+            android:divider="@color/white"
+            android:dividerHeight="1dp" />
+    </android.support.v4.widget.DrawerLayout>
+
 </RelativeLayout>

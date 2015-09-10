@@ -45,7 +45,7 @@ public class WelcomePage extends Activity {
         }
 
         //先到本地内存获取手机号码
-        String phoneNomber=PreferenceUtil.getLogin(this);
+        String phoneNomber= PreferenceUtil.getString(this, PreferenceUtil.KEY.USERNAME, "");
         if(TextUtils.isEmpty(phoneNomber)){
             // 没有登陆需要获取手机号码，用手机号码登录
             phoneNomber = MobileUtil.getNativePhoneNumber(this);
@@ -55,7 +55,8 @@ public class WelcomePage extends Activity {
             }else{
                 //获取手机号码
                 phoneNomber = phoneNomber.substring(phoneNomber.length() - 11, phoneNomber.length());
-                PreferenceUtil.setLogin(this, phoneNomber);
+                //设置电话号码
+                PreferenceUtil.setString(this,PreferenceUtil.KEY.USERNAME,phoneNomber);
             }
         }
 

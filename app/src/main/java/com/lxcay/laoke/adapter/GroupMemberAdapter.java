@@ -98,7 +98,7 @@ public class GroupMemberAdapter extends BaseAdapter {
 				}
 			}
 
-			if (PreferenceUtil.getBooleanValue(context, "g_show_name_" + group.getGroupID())) {
+			if (PreferenceUtil.getBoolean(context, "g_show_name_" + group.getGroupID(),false)) {
 				TextView name = new TextView(context);
 				if(TextUtils.isEmpty(u.getNickname())){
 					name.setText("["+u.getName()+"]");

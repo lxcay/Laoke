@@ -68,7 +68,7 @@ public class GotyeService extends Service {
     }
 
     public static String getUser(Context context) {
-        return PreferenceUtil.getLogin(context);
+        return PreferenceUtil.getString(context, PreferenceUtil.KEY.USERNAME,"");
     }
 
     @SuppressWarnings("deprecation")

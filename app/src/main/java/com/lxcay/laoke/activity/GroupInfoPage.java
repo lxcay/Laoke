@@ -194,12 +194,12 @@ public class GroupInfoPage extends Activity implements OnClickListener {
         findViewById(R.id.back).setOnClickListener(this);
 
         CheckBox set_to_top = ((CheckBox) findViewById(R.id.set_to_top));
-        boolean setTop = PreferenceUtil.getBooleanValue(this, "set_top_" + group.getGroupID());
+        boolean setTop = PreferenceUtil.getBoolean(this, "set_top_" + group.getGroupID(),false);
         set_to_top.setChecked(setTop);
         set_to_top.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                PreferenceUtil.setBooleanValue(GroupInfoPage.this, "set_top_" + group.getGroupID(), arg1);
+                PreferenceUtil.setBoolean(GroupInfoPage.this, "set_top_" + group.getGroupID(), arg1);
                 api.markSessionIsTop(group, arg1);
             }
         });
@@ -294,14 +294,13 @@ public class GroupInfoPage extends Activity implements OnClickListener {
             }
         });
         CheckBox showMemberName = ((CheckBox) findViewById(R.id.show_member_name));
-        showMemberName.setChecked(PreferenceUtil.getBooleanValue(
-                GroupInfoPage.this, "g_show_name_" + group.getGroupID()));
+        showMemberName.setChecked(PreferenceUtil.getBoolean(GroupInfoPage.this, "g_show_name_" + group.getGroupID(),false));
         showMemberName
                 .setOnCheckedChangeListener(new OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton arg0,
                                                  boolean arg1) {
-                        PreferenceUtil.setBooleanValue(GroupInfoPage.this,
+                        PreferenceUtil.setBoolean(GroupInfoPage.this,
                                 "g_show_name_" + group.getGroupID(), arg1);
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();

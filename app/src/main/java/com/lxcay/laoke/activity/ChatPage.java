@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ import com.gotye.api.GotyeRoom;
 import com.gotye.api.GotyeStatusCode;
 import com.gotye.api.GotyeUser;
 import com.gotye.api.WhineMode;
+import com.juyou.banner.MiniView;
 import com.lxcay.laoke.MainActivity;
 import com.lxcay.laoke.R;
 import com.lxcay.laoke.adapter.BiaoQingViewPager;
@@ -69,8 +71,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import ads.Lxcay;
 
 public class ChatPage extends Activity implements OnClickListener, OnTouchListener {
     public static final int REALTIMEFROM_OTHER = 2;
@@ -161,7 +161,9 @@ public class ChatPage extends Activity implements OnClickListener, OnTouchListen
         for (int i = 0; i < 4; ++i)
             lv.add(getGridView(i));// 得到3个GridView
         mViewPager.setAdapter(new BiaoQingViewPager(lv));
-        Lxcay.getbanner(this);
+        RelativeLayout viewById = (RelativeLayout) findViewById(R.id.ad_container_banner);
+        MiniView miniView2 = new MiniView(this);
+        viewById.addView(miniView2);
         biaoqing.setOnClickListener(this);
         title = ((TextView) findViewById(R.id.title));
         realTalkView = findViewById(R.id.real_time_talk_layout);

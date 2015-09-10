@@ -8,14 +8,20 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +47,7 @@ import com.lxcay.laoke.utils.ImageCache;
 import com.lxcay.laoke.utils.ProgressDialogUtil;
 import com.lxcay.laoke.utils.Utils;
 import com.lxcay.laoke.view.CustomRadioGroup;
+import com.lxcay.lock.Lock_MainActivity;
 
 import ads.Lxcay;
 
@@ -56,6 +63,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private MessageFragment mMessageFragment;
     private ContactsFragment mContactsFragment;
     private SettingFragment mSettingFragment;
+    private DrawerLayout mDrawerLayout;
+    private ListView mListView;
     private PopupWindow mPopupWindow;
     public static TextView mainTitle;
     public TextView tv_back;
@@ -74,7 +83,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         api = GotyeAPI.getInstance();
         setContentView(R.layout.activity_main);
         api.addListener(mDelegate);
-
         //初始化id
         ImageView main_add = (ImageView) findViewById(R.id.title_bar_layout_add);
         mainTitle=(TextView)findViewById(R.id.title_bar_layout_tv);
@@ -87,15 +95,38 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         currentLoginName = api.getLoginUser().getName();
         beep = new BeepManager(MainActivity.this);
         beep.updatePrefs();
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        //设置背景跟启动方式
+        mDrawerLayout.setDrawerShadow(R.mipmap.drawer_shadow,GravityCompat.START);
+        mListView = (ListView) findViewById(R.id.left_drawer);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, new String[]{
+                getString(R.string.title_section1),}){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView textView = (TextView) super.getView(position, convertView, parent);
+                textView.setTextColor(MainActivity.this.getResources().getColor(R.color.white));
+                return textView;
+            }
+        };
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(new ListView.OnItemClickListener(){
 
-
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0){
+                    Intent intent=new Intent(getBaseContext(), Lock_MainActivity.class);
+                    startActivity(intent);
+                    mDrawerLayout.closeDrawer(mListView);
+                }
+            }
+        });
         //---------------------------------------
         // 底部
         footer = (CustomRadioGroup) findViewById(R.id.main_footer);
         for (int i = 0; i < itemImage.length; i++) {
             footer.addItem(itemImage[i], itemCheckedImage[i], itemText[i]);
         }
-        Lxcay.getbanner(this);
+        Lxcay.getbannerB(this);
         //主体
         mViewPager = (ViewPager) findViewById(R.id.main_body);
         mAdapter = new FragmentAdapters(getSupportFragmentManager());

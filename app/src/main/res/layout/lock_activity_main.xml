@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9900CC">
+
+    <FrameLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="360dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/yy" />
+
+        <com.lxcay.lock.Lock_FocusedTextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:layout_marginTop="20dp"
+            android:singleLine="true"
+            android:text="                   (*^__^*) 嘻嘻……               小钰专用!!!"
+            android:textColor="#9900CC"
+            android:textSize="20dp" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:onClick="uninstall"
+        android:text="卸载"
+        android:textColor="#F5FFFA" />
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button5"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/transparent"
+        android:onClick="active"
+        android:text="激活一键锁屏"
+        android:textColor="#F5FFFA" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button6"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/transparent"
+        android:onClick="createIcon"
+        android:text="创建屏幕快捷图标"
+        android:textColor="#F5FFFA" />
+
+</RelativeLayout>

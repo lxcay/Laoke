@@ -6,6 +6,7 @@
 
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">已发送</string>
-
-
+    <string name="title_section1">激活一键锁屏</string>
+    <string name="sample_device_admin_description">一键锁屏，时刻保护好您的尊贵的设备!!</string>
+    <string name="sample_device_admin">一键锁屏</string>
 </resources>

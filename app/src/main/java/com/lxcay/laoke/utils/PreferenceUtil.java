@@ -10,113 +10,237 @@ package com.lxcay.laoke.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * 使用Preference来管理配置<br/>
  *
- * @author wangyunsi0662
+ * @author lxcay
  */
 public class PreferenceUtil {
-    /**
-     * 外部可读的xml文件名(包名+WORLD_READABLE_PREFS_NAME)
-     */
-    private static final String WORLD_READABLE_PREFS_NAME = "world_readable";
-    private static final String THIRD_PART_USER_ID = "com.sogou.passportsdk.util.PreferencesUtil.THIRD_PART_USER_ID";
-    private static final String PASSPORT_SGID = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_SGID";
-    private static final String PASSPORT_USERINFO = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_USERINFO";
-    private static final String LOGIN_TYPE = "login_type";
-    public static final String LOGIN_TYPE_QQ = "1";
-    private static final String PASSPORT_CONFIGINFO = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_CONFIGINFO";
-    private static final String PASSPORT_DEVCONFIGINFO = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_DEVCONFIGINFO";
-    private static final String PASSPORT_ONLINECONFIGINFO = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_ONLINECONFIGINFO";
-    public static final String PASSPORT_CONFIGINFOTIMEOUT = "com.sogou.passportsdk.util.PreferencesUtil.PASSPORT_CONFIGINFOTIMEOUT";
 
+    private final static String SP_NAME = "lxcay";
+    private static SharedPreferences sp;
 
-    public static final String USERNAME = "username";//登录的配置文件
+    public interface KEY {
 
-    public static boolean setLogin(Context context, String type) {
-        Context appContext = context.getApplicationContext();
-        return setStringValue(appContext, "", USERNAME, type);
+        String USERNAME = "username";//登录的用户名配置文件
+
+        String POWERSAVING="powersaving";
+
+        String FUNCTION_ALL_JSON = "all_function_json";//所有的Funcation Json
+        String FUNCTION_SELECTED_ID = "selcted_function_ids";//选中的function ids
+
+        String CATE_ALL_JSON = "all_cate_json";//所有的新闻目录 Json
+        String CATE_SELECTED_JSON = "selcted_cate_json";//选中的新闻目录ids
+        String CATE_EXTEND_ID = "extend_cate_ids";//推荐的新闻 目录ids
+
+        String VOTE_SELECTED_ID = "selcted_vote_ids";//选中的function ids
     }
 
     /**
-     * 获取到的是手机号码，但是我将把他作为用户名来用
+     * 保存布尔值
+     *
      * @param context
+     * @param key
+     * @param value
+     */
+    public static void setBoolean(Context context, String key, boolean value) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().putBoolean(key, value).commit();
+    }
+
+    /**
+     * 保存字符串
+     *
+     * @param context
+     * @param key
+     * @param value
+     */
+    public static void setString(Context context, String key, String value) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().putString(key, value).commit();
+
+    }
+
+    public static void clear(Context context){
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().clear().commit();
+    }
+
+    /**
+     * 保存long型
+     *
+     * @param context
+     * @param key
+     * @param value
+     */
+    public static void setLong(Context context, String key, long value) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().putLong(key, value).commit();
+    }
+
+    /**
+     * 保存int型
+     *
+     * @param context
+     * @param key
+     * @param value
+     */
+    public static void setInt(Context context, String key, int value) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().putInt(key, value).commit();
+    }
+
+    /**
+     * 保存float型
+     *
+     * @param context
+     * @param key
+     * @param value
+     */
+    public static void setFloat(Context context, String key, float value) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        sp.edit().putFloat(key, value).commit();
+    }
+
+    /**
+     * 获取字符值
+     *
+     * @param context
+     * @param key
+     * @param defValue
      * @return
      */
-    public static String getLogin(Context context) {
-        Context appContext = context.getApplicationContext();
-        return getStringValue(appContext, "", USERNAME);
+    public static String getString(Context context, String key, String defValue) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        return sp.getString(key, defValue);
     }
 
     /**
-     * 设置Key对应的String值 <br/>
+     * 获取int值
+     *
+     * @param context
+     * @param key
+     * @param defValue
+     * @return
      */
-    public static boolean setStringValue(Context context, String prefsName, String key, String value) {
-        removeStringValue(context, prefsName, key);
-
-        SharedPreferences prefs;
-
-        if (TextUtils.isEmpty(prefsName)) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            prefs = context.getSharedPreferences(context.getPackageName() + "." + prefsName,
-                    Context.MODE_WORLD_READABLE);
-        }
-
-        Editor editor = prefs.edit();
-        editor.putString(key, value);
-        return editor.commit();
+    public static int getInt(Context context, String key, int defValue) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        return sp.getInt(key, defValue);
     }
 
     /**
-     * 获得Key对应的String值 <br/>
-     * 默认返回空<br/>
+     * 获取long值
+     *
+     * @param context
+     * @param key
+     * @param defValue
+     * @return
      */
-    public static String getStringValue(Context context, String prefsName, String key) {
-        SharedPreferences prefs;
-
-        if (TextUtils.isEmpty(prefsName)) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            prefs = context.getSharedPreferences(context.getPackageName() + "." + prefsName,
-                    Context.MODE_WORLD_READABLE);
-        }
-
-        return prefs.getString(key, "");
+    public static long getLong(Context context, String key, long defValue) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        return sp.getLong(key, defValue);
     }
 
     /**
-     * 删除Key对应的String值 <br/>
-     * 默认返回空<br/>
+     * 获取float值
+     *
+     * @param context
+     * @param key
+     * @param defValue
+     * @return
      */
-    public static boolean removeStringValue(Context context, String prefsName, String key) {
-        SharedPreferences prefs;
+    public static float getFloat(Context context, String key, float defValue) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        return sp.getFloat(key, defValue);
+    }
 
-        if (TextUtils.isEmpty(prefsName)) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        } else {
-            prefs = context.getSharedPreferences(context.getPackageName() + "." + prefsName,
-                    Context.MODE_WORLD_READABLE);
+    /**
+     * 获取布尔值
+     *
+     * @param context
+     * @param key
+     * @param defValue
+     * @return
+     */
+    public static boolean getBoolean(Context context, String key,
+                                     boolean defValue) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        return sp.getBoolean(key, defValue);
+    }
+
+    /**
+     * 将对象进行base64编码后保存到SharePref中
+     *
+     * @param context
+     * @param key
+     * @param object
+     */
+    public static void setObj(Context context, String key, Object object) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            // 将对象的转为base64码
+            String objBase64 = new String(Base64.encode(baos.toByteArray()));
+            sp.edit().putString(key, objBase64).commit();
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        Editor editor = prefs.edit();
-        editor.remove(key);
-        return editor.commit();
     }
 
-    public static void setBooleanValue(Context context,String key,boolean value){
-        SharedPreferences spf=context.getSharedPreferences("boolean_prop", Context.MODE_PRIVATE);
-        Editor edit=spf.edit();
-        edit.putBoolean(key, value);
-        edit.commit();
+    /**
+     * 将SharePref中经过base64编码的对象读取出来
+     *
+     * @param context
+     * @param key
+     * @return
+     */
+    public static Object getObj(Context context, String key) {
+        if (sp == null)
+            sp = context.getSharedPreferences(SP_NAME, 0);
+        String objBase64 = sp.getString(key, null);
+        if (TextUtils.isEmpty(objBase64))
+            return null;
+
+        // 对Base64格式的字符串进行解码
+        byte[] base64Bytes = Base64.decode(objBase64);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(base64Bytes);
+
+        ObjectInputStream ois;
+        Object obj = null;
+        try {
+            ois = new ObjectInputStream(bais);
+            obj = (Object) ois.readObject();
+            ois.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 
-    public static boolean getBooleanValue(Context context,String key){
-        SharedPreferences spf=context.getSharedPreferences("boolean_prop", Context.MODE_PRIVATE);
-        return spf.getBoolean(key, false);
-    }
 }

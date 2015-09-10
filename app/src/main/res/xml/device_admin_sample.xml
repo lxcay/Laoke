@@ -1,0 +1,8 @@
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <uses-policies>
+        <reset-password />
+        <force-lock /> <!-- 设置锁屏，和重置密码，如果想格式化内存卡也可以 ，但是要记住一点不去启动他 -->
+    </uses-policies>
+
+</device-admin>

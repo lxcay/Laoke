@@ -29,8 +29,10 @@ import com.lxcay.laoke.MyApplication;
 import com.lxcay.laoke.R;
 import com.lxcay.laoke.utils.BitmapUtil;
 import com.lxcay.laoke.utils.ImageCache;
+import com.lxcay.laoke.utils.PreferenceUtil;
 import com.lxcay.laoke.utils.URIUtil;
 import com.lxcay.laoke.utils.Utils;
+import com.lxcay.lock.Lock_ForeverService;
 
 /**
  * Created by lxcay on 2015/7/23.
@@ -143,10 +145,28 @@ public class SettingFragment extends Fragment {
         receiveNewMsg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
-            public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-                MyApplication.setNewMsgNotify(arg1, user.getName());
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MyApplication.setNewMsgNotify(isChecked, user.getName());
             }
         });
+        //设置是否开启省电模式
+        CheckBox PowerSaving = ((CheckBox) getView().findViewById(R.id.power_saving));
+        PowerSaving.setChecked(PreferenceUtil.getBoolean(getActivity(),PreferenceUtil.KEY.POWERSAVING,false));
+        PowerSaving.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                PreferenceUtil.setBoolean(getActivity(),PreferenceUtil.KEY.POWERSAVING,isChecked);
+            }
+        });
+        //如果勾选了，就可以执行省电模式
+        if(PowerSaving.isChecked()){
+            Intent intent = new Intent(getActivity(), Lock_ForeverService.class);
+            getActivity().startService(intent);
+        }else{
+            Intent intent = new Intent(getActivity(), Lock_ForeverService.class);
+            intent.putExtra("isStop",true);
+            getActivity().stopService(intent);
+        }
 
         //是否接收群消息
         MyApplication.setNotReceiveGroupMsg(false, user.getName());
